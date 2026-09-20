@@ -1,6 +1,7 @@
-export const success = ({res,status=200,msg="done",data={}})=>{
+export const success = async({res,status,msg,data})=>{
         res.status(status).json({
             msg:msg,
+            status:status,
             data:data
         })
 }

@@ -1,17 +1,16 @@
 import { Router } from "express";
+import * as all from "./service.js"
 import { success } from "../../utils/successresponse.js";
-import { insert } from "./service.js";
 const userrouter = Router()
-export const routes = {base:"/user",first:"/hi"}
-userrouter.post("/user",async(req,res)=>{
-    const data = await insert(req.body)
-    if(data){
-    success({res,status:200,msg:"usercreated",data:data})
+export const routes = {base:"/user",hi:"/hi"}
+userrouter.post(routes.hi ,async(req,res)=>{
+    if(Object.keys(req.body).length>0){
+    const data = await all.insert(req.body)
+    success({res,status:200,msg:"created",data})
+    }else{
+            throw new Error("the body not found",{cause:{
+                code:500
+            }})
     }
-    else{
-    throw new Error("the user not found ",{
-        cause:{statuscode:400}
-    })
-}
 })
 export default userrouter
